@@ -1,0 +1,22 @@
+name: Generate OSS Badge
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'  # Weekly on Sunday at midnight
+  workflow_dispatch:      # Manual trigger
+
+permissions:
+  contents: write  # Required for auto-commit
+
+jobs:
+  update-badge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Generate OSS Badge
+        uses: mabd-dev/gh-oss-stats-action@v0.2.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          badge-style: summary
+          badge-theme: dark
